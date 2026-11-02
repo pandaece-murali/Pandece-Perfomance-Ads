@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import ScrollReveal from "./ScrollReveal";
 
 export default function EconomicsCalculator() {
   const [monthlySpend, setMonthlySpend] = useState<number>(300000);
@@ -29,8 +30,14 @@ export default function EconomicsCalculator() {
   const extraRevenue = pandeceRevenue - baseRevenue;
 
   const scrollToLeadForm = () => {
-    const el = document.getElementById("lead-form");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById("admission-form") || document.getElementById("lead-form");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => {
+        const input = document.getElementById("full-name-input") as HTMLInputElement | null;
+        if (input) input.focus();
+      }, 600);
+    }
   };
 
   const formatINR = (val: number) => {
@@ -42,26 +49,29 @@ export default function EconomicsCalculator() {
   };
 
   return (
-    <section id="calculator" className="py-20 bg-white border-y border-slate-200 relative overflow-hidden">
+    <section id="calculator" className="py-10 sm:py-14 bg-white border-y border-slate-200 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2864F0]/10 border border-[#2864F0]/20 text-[#2864F0] text-xs font-bold uppercase tracking-wider mb-4">
-            <span>Interactive Simulator</span>
+        <ScrollReveal animation="fade-up">
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2864F0]/10 border border-[#2864F0]/20 text-[#2864F0] text-xs font-bold uppercase tracking-wider mb-3">
+              <span>Interactive Simulator</span>
+            </div>
+
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-[#101D35] tracking-tight mb-3 uppercase">
+              Test Your Admission Unit Economics
+            </h2>
+
+            <p className="text-sm sm:text-base text-[#64748B] leading-relaxed">
+              Move the sliders to match your monthly digital ad budget and course fee. See the difference between vanity lead gen and full-funnel seat acquisition.
+            </p>
           </div>
-
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-[#101D35] tracking-tight mb-4 uppercase">
-            Test Your Admission Unit Economics
-          </h2>
-
-          <p className="text-base sm:text-lg text-[#64748B] leading-relaxed">
-            Move the sliders to match your monthly digital ad budget and course fee. See the difference between vanity lead gen and full-funnel seat acquisition.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Calculator Body */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#F5F8FF] p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-sm">
+        <ScrollReveal animation="scale-up" delay={100}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#F5F8FF] p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-sm hover-card-lift">
           
           {/* Left Column: Sliders */}
           <div className="lg:col-span-6 space-y-7">
@@ -215,7 +225,7 @@ export default function EconomicsCalculator() {
 
             <button
               onClick={scrollToLeadForm}
-              className="w-full py-3.5 rounded-xl bg-[#2864F0] text-white font-bold text-sm shadow-md hover:bg-[#1E50C7] transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-3.5 rounded-xl bg-[#2864F0] text-white font-bold text-sm shadow-md hover:bg-[#1E50C7] transition-all cursor-pointer flex items-center justify-center gap-2 hover:scale-[1.01]"
             >
               <span>Audit Your Institution's Unit Economics</span>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -225,6 +235,7 @@ export default function EconomicsCalculator() {
           </div>
 
         </div>
+        </ScrollReveal>
 
       </div>
     </section>

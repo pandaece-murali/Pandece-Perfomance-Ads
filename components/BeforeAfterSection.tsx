@@ -1,13 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import ScrollReveal from "./ScrollReveal";
 
 export default function BeforeAfterSection() {
   const [viewMode, setViewMode] = useState<"side-by-side" | "table">("side-by-side");
 
   const scrollToLeadForm = () => {
-    const el = document.getElementById("lead-form");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById("admission-form") || document.getElementById("lead-form");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => {
+        const input = document.getElementById("full-name-input") as HTMLInputElement | null;
+        if (input) input.focus();
+      }, 600);
+    }
   };
 
   const metricsData = [
@@ -124,7 +131,7 @@ export default function BeforeAfterSection() {
   ];
 
   return (
-    <section id="before-after" className="py-24 bg-[#101D35] text-white relative overflow-hidden">
+    <section id="before-after" className="py-10 sm:py-14 bg-[#101D35] text-white relative overflow-hidden">
       {/* Background visual graphics */}
       <div className="absolute top-1/4 left-[-100px] w-96 h-96 bg-[#2864F0]/20 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-[-100px] w-96 h-96 bg-[#5B8CFF]/15 rounded-full blur-[140px] pointer-events-none" />
@@ -133,47 +140,49 @@ export default function BeforeAfterSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2864F0]/20 border border-[#2864F0]/40 text-[#5B8CFF] text-xs font-bold uppercase tracking-wider mb-4">
-            <span>Illustrative Case Study | Education Sector</span>
+        <ScrollReveal animation="fade-up">
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2864F0]/20 border border-[#2864F0]/40 text-[#5B8CFF] text-xs font-bold uppercase tracking-wider mb-3">
+              <span>Illustrative Case Study | Education Sector</span>
+            </div>
+
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-3 uppercase">
+              SAME ₹3,00,000 BUDGET. <br />
+              <span className="text-[#5B8CFF]">30 ADMISSIONS OR 75?</span>
+            </h2>
+
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+              An institution spending ₹3,00,000/month on ads — and closing just 30 admissions. The real issue wasn't enquiry volume. It was zero visibility into lead quality, conversion and true cost per student.
+            </p>
+
+            {/* Toggle view buttons */}
+            <div className="flex items-center justify-center gap-2 mt-6">
+              <button
+                onClick={() => setViewMode("side-by-side")}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  viewMode === "side-by-side"
+                    ? "bg-[#2864F0] text-white shadow-md shadow-[#2864F0]/30"
+                    : "bg-white/5 text-slate-300 hover:bg-white/10"
+                }`}
+              >
+                Side-by-Side Visual Dashboard
+              </button>
+              <button
+                onClick={() => setViewMode("table")}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  viewMode === "table"
+                    ? "bg-[#2864F0] text-white shadow-md shadow-[#2864F0]/30"
+                    : "bg-white/5 text-slate-300 hover:bg-white/10"
+                }`}
+              >
+                Complete Metric Breakdown Table
+              </button>
+            </div>
           </div>
-
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 uppercase">
-            SAME ₹3,00,000 BUDGET. <br />
-            <span className="text-[#5B8CFF]">30 ADMISSIONS OR 75?</span>
-          </h2>
-
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-            An institution spending ₹3,00,000/month on ads — and closing just 30 admissions. The real issue wasn't enquiry volume. It was zero visibility into lead quality, conversion and true cost per student.
-          </p>
-
-          {/* Toggle view buttons */}
-          <div className="flex items-center justify-center gap-2 mt-8">
-            <button
-              onClick={() => setViewMode("side-by-side")}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                viewMode === "side-by-side"
-                  ? "bg-[#2864F0] text-white shadow-md shadow-[#2864F0]/30"
-                  : "bg-white/5 text-slate-300 hover:bg-white/10"
-              }`}
-            >
-              Side-by-Side Visual Dashboard
-            </button>
-            <button
-              onClick={() => setViewMode("table")}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                viewMode === "table"
-                  ? "bg-[#2864F0] text-white shadow-md shadow-[#2864F0]/30"
-                  : "bg-white/5 text-slate-300 hover:bg-white/10"
-              }`}
-            >
-              Complete Metric Breakdown Table
-            </button>
-          </div>
-        </div>
+        </ScrollReveal>
 
         {/* 4 Big Visual Impact Highlights */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div className="p-5 rounded-2xl bg-gradient-to-br from-[#2864F0]/25 to-white/[0.03] border border-[#2864F0]/40 text-center relative overflow-hidden">
             <div className="text-xs uppercase font-extrabold tracking-wider text-[#5B8CFF] mb-1">
               Admission Surge
@@ -225,7 +234,7 @@ export default function BeforeAfterSection() {
 
         {/* View Mode 1: Interactive Side-by-Side Dashboard */}
         {viewMode === "side-by-side" ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-14">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
             
             {/* BEFORE PANEL */}
             <div className="rounded-3xl bg-slate-900/80 border border-rose-500/30 p-6 sm:p-8 backdrop-blur-md relative">
@@ -381,72 +390,69 @@ export default function BeforeAfterSection() {
         )}
 
         {/* "What Changed" Five Strategic Pillars */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-white/[0.04] border border-white/15 mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-8 h-8 rounded-xl bg-[#2864F0] flex items-center justify-center text-white font-black text-sm">
-              ✓
-            </span>
-            <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
-              What Changed in This Scenario
-            </h3>
-          </div>
+        <ScrollReveal animation="fade-up" delay={100}>
+          <div className="p-6 sm:p-8 rounded-3xl bg-white/[0.04] border border-white/15 mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-8 h-8 rounded-xl bg-[#2864F0] flex items-center justify-center text-white font-black text-sm">
+                ✓
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
+                What Changed in This Scenario
+              </h3>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">01. Targeting Rebuilt</span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Rebuilt around real course, location and intent signals rather than broad keywords.
-              </p>
-            </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">02. Landing Pages</span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Aligned to each programme, with clear information and one focused enquiry action.
-              </p>
-            </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">03. Lead Quality Scored</span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Scored dynamically instead of counting every junk form fill equally.
-              </p>
-            </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">04. CRM Connected</span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Leads connected to admissions using available CRM and verified conversion data.
-              </p>
-            </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">05. Budget Shifted</span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Budget reallocated continuously against measured admissions performance.
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover-card-lift">
+                <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">01. Targeting Rebuilt</span>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Rebuilt around real course, location and intent signals rather than broad keywords.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover-card-lift">
+                <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">02. Landing Pages</span>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Aligned to each programme, with clear information and one focused enquiry action.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover-card-lift">
+                <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">03. Lead Quality Scored</span>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Scored dynamically instead of counting every junk form fill equally.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover-card-lift">
+                <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">04. CRM Connected</span>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Leads connected to admissions using available CRM and verified conversion data.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover-card-lift">
+                <span className="text-xs font-mono font-bold text-[#5B8CFF] block mb-1">05. Budget Shifted</span>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Budget reallocated continuously against measured admissions performance.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Closing Action Banner */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <p className="text-base sm:text-lg font-semibold text-white mb-6">
-            Your campaigns deserve the same scorecard. Enquiries aren't the finish line. Qualified prospects, confirmed admissions, acquisition cost and attributable revenue are.
-          </p>
-          <button
-            onClick={scrollToLeadForm}
-            className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#2864F0] to-[#5B8CFF] text-white font-bold text-base shadow-xl shadow-[#2864F0]/30 hover:shadow-[#2864F0]/50 hover:-translate-y-0.5 transition-all cursor-pointer inline-flex items-center gap-3"
-          >
-            <span>Get Your Admission Marketing Reviewed</span>
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Mandatory Case Study Disclaimer Verbatim */}
-        <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center max-w-4xl mx-auto">
-          <p className="text-xs text-slate-300 leading-relaxed">
-            <strong className="text-white font-semibold">Important Methodology Note:</strong> Hypothetical scenario built to demonstrate the method and maths. Not verified client results or guaranteed outcomes. Assumes identical ₹3,00,000 monthly spend and ₹50,000 attributable collected revenue per admission in both periods. Actual performance depends on demand, campaign conditions, course economics, admissions operations and reliable attribution. Revenue-to-ad-spend is not net profit or ROI.
-          </p>
-        </div>
+        <ScrollReveal animation="fade-up" delay={150}>
+          <div className="text-center max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg font-semibold text-white mb-6">
+              Your campaigns deserve the same scorecard. Enquiries aren't the finish line. Qualified prospects, confirmed admissions, acquisition cost and attributable revenue are.
+            </p>
+            <button
+              onClick={scrollToLeadForm}
+              className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#2864F0] to-[#5B8CFF] text-white font-bold text-base shadow-xl shadow-[#2864F0]/30 hover:shadow-[#2864F0]/50 hover:-translate-y-0.5 transition-all cursor-pointer inline-flex items-center gap-3 hover-card-lift"
+            >
+              <span>Get Your Admission Marketing Reviewed</span>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>
