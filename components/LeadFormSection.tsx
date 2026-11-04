@@ -43,18 +43,21 @@ export default function LeadFormSection() {
     try {
       const res = await submitToGHL(fd);
       if (res.success) {
-        setSubmitted(true);
         const params = new URLSearchParams();
         if (formData.fullName) params.set("name", formData.fullName);
         if (formData.institutionName) params.set("org", formData.institutionName);
         if (formData.monthlyBudget) params.set("budget", formData.monthlyBudget);
-        router.push(`/thank-you?${params.toString()}`);
+        const thankYouUrl = `/thank-you?${params.toString()}`;
+
+        // Direct instant navigation to thank you page
+        window.location.assign(thankYouUrl);
+        return;
       } else {
         setErrorMessage(res.error || "Submission failed. Please check your connection.");
+        setLoading(false);
       }
     } catch (err: any) {
       setErrorMessage(err?.message || "An unexpected error occurred.");
-    } finally {
       setLoading(false);
     }
   };
@@ -331,7 +334,13 @@ export default function LeadFormSection() {
                         className="w-full py-4 rounded-xl bg-gradient-to-r from-[#2864F0] to-[#5B8CFF] text-white font-bold text-base shadow-xl shadow-[#2864F0]/30 hover:shadow-[#2864F0]/50 hover:brightness-105 transition-all cursor-pointer flex items-center justify-center gap-2"
                       >
                         {loading ? (
-                          <span>Analysing Intake Parameters...</span>
+                          <span className="flex items-center gap-2">
+                            <svg className="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                            </svg>
+                            <span>Submitting &amp; Opening Thank You Page...</span>
+                          </span>
                         ) : (
                           <>
                             <span>Get My Admission Marketing Review</span>
